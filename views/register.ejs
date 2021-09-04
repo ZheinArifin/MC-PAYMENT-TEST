@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="form-login">
+        <center>
+            <h3>Creat Your Account</h3>
+        </center>
+        <form method="post" action="/register">
+            <center>
+                <input type="text" name="nama_lengkap" placeholder="Nama Lengkap" required><br>
+                <input type="text" name="username" placeholder="Username" required><br>
+                <input type="password" name="password" placeholder="Password" required>
+                <button>Sign in</button>
+            </center>
+        </form>
+    </div>
+    <div class="form-footer">
+        have an account? <a href="/login">Sign In</a>
+    </div>
+    
+</div>
+
+<% if(typeof error!= 'undefined'){ %>
+    <script>
+        setTimeout(function(){
+            swal({
+            icon: 'warning',
+            title: 'Registrasi Gagal!',
+            text: 'Username sudah terdaftar!',
+            closeOnClickOutside: false,
+            buttons: false,
+            timer: 2000
+            });
+        });
+    </script>
+<% } %>
+    
+<% if(msg.length !== 0){ %>
+    <script>
+        setTimeout(function(){
+            swal({
+            icon: 'success',
+            title: 'Registrasi Gagal!',
+            text: '<%=msg%>',
+            closeOnClickOutside: false,
+            buttons: false,
+            timer: 2000
+            });
+        });
+    </script>
+<% } %>

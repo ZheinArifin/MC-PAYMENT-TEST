@@ -1,0 +1,17 @@
+<%= username %> 
+<% if(msg.length !== 0){ %>
+    <script>
+        setTimeout(function(){
+            swal({
+            icon: 'success',
+            title: '<%=msg%>',
+            text: '<%=msg%>',
+            closeOnClickOutside: false,
+            buttons: false,
+            timer: 2000
+            }).then((value) =>{
+                location='/dashboard';
+            });
+        });
+    </script>
+<% } %>
