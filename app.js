@@ -19,7 +19,7 @@ app.use(expressLayouts);
 app.use(express.static('public'));
 app.use(express.urlencoded({extended:true}));
 
-//konfigurasi session
+//konfigurasi sessions
 app.use(cookieParser('secret'));
 app.use(session({
   secret: 'Keep it secret',
