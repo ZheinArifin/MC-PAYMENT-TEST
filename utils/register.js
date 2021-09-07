@@ -9,8 +9,12 @@ if(!fs.existsSync(dirPath)){
 
 // membuat file jika belum ada
 const filePath = "./data/account.json";
-if(!fs.existsSync(filePath)){
+const fileWallet = "./data/wallet.json";
+if(!fs.existsSync(filePath) || !fs.existsSync(fileWallet)){
     fs.writeFileSync(filePath,'[]', 'utf-8');
+    fs.writeFileSync(fileWallet,'[]', 'utf-8');
+    fs.writeFileSync('data/income.json', `[]`, 'utf-8');
+    fs.writeFileSync('data/expense.json', `[]`, 'utf-8');
 }
 
 // cari akun berdasarkan nama
@@ -29,6 +33,15 @@ const saveContacts = (contacts) => {
 
 //menambhakan akun baru
 const addAccount = (contact) =>{
+    
+    const newWallet = {
+        "username": contact.username,
+        "wallet": 0,
+    }
+    const wallets = loadWallet();
+    wallets.push(newWallet);
+    console.log(contact)
+    fs.writeFileSync('data/wallet.json', JSON.stringify(wallets))
     const contacts = loadAccount();
     contacts.push(contact);
     saveContacts(contacts);
@@ -43,6 +56,13 @@ const cekDuplikat = (nama) =>{
 // mengambil seluruh data akun
 const loadAccount = () => {
     const file = fs.readFileSync('data/account.json', 'utf-8');
+    const json = JSON.parse(file);
+    return json;
+}
+
+//mengambil seluruh data wallet
+const loadWallet = () => {
+    const file = fs.readFileSync('data/wallet.json', 'utf-8');
     const json = JSON.parse(file);
     return json;
 }
