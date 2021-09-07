@@ -6,59 +6,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budget Application</title>
     <link rel="stylesheet" href="../css/budget-app.css">
+    <script src="../js/Chart.js"></script>
 </head>
-<body>
+<body onload="makeid(10)">
+  <% if (active === "dashboard") { 
+      var active1 = "active";
+     }else if(active === "wallet"){ 
+      var active2 = "active";
+     }else{ 
+      var active3 = "active";
+      } %>
+
   <!-- Header -->
-  <div id="sideNavigation" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="#">
+  <div class="sidebar">
+    <a class="<%=active1%>" href="/dashboard">
       <i class="fas fa-tachometer-alt fa-fw"></i> Dashboard
     </a>
-    <a href="#">
-      <i class="fas fa-wallet fa-fw"></i> Balance
+    <a class="<%=active2%>" href="/wallet">
+      <i class="fas fa-wallet fa-fw"></i> Wallet
     </a>
-    <a href="#">
-      <i class="fas fa-hand-holding-usd fa-fw"></i> Income
+    <a class="<%=active3%>" href="/activity">
+      <i class="fas fa-file-invoice fa-fw"></i> My Activity
     </a>
+    <a href="/logout">
+      <i class="fas fa-sign-out fa-fw"> </i> Logout
+      </a>
   </div>
+  <!-- end header -->
   
-  <!-- menu bar -->
-  <nav class="topnav">
-    <a href="#" onclick="openNav()">
-      <svg width="30" height="30" id="icoOpen">
-          <path d="M0,5 30,5" stroke="#fff" stroke-width="5" />
-          <path d="M0,14 30,14" stroke="#fff" stroke-width="5"/>
-          <path d="M0,23 30,23" stroke="#fff" stroke-width="5"/>
-      </svg>
-    </a>
-  </nav>
   <!-- main content -->
-  <div id="main">
+  <div class="content">
     <%- body %>
   </div>
+
 </body>
+</html>
+<script src="../js/fontawesome.js"></script>
+<script src="../js/sweetalert2.js"></script>
+<script src="../js/jquery.min.js"></script>
 
 <script>
-  // open nav function
-  function openNav() {
-    document.getElementById("sideNavigation").style.width = "200px";
-    document.getElementById("main").style.marginLeft = "200px";
+  function openPage(pageName,elmnt,color,class1) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    if(class1 === "income"){
+      document.getElementsByClassName('expense')[0].style.color  = "white";
+      document.getElementsByClassName(class1)[0].style.color  = "black";
+    }else{
+      document.getElementsByClassName('income')[0].style.color  = "white";
+      document.getElementsByClassName(class1)[0].style.color  = "black";
+    }
+    document.getElementsByClassName(class1)[0].style.border  = "1px solid black";
+    document.getElementsByClassName(class1)[0].style.backgroundColor  = "";
+    document.getElementById(pageName).style.display = "block";
+    elmnt.style.backgroundColor = color;
+    elmnt.style.border = "1px solid rgba(50, 205, 50,0.0)";
   }
-  // close nav function
-  function closeNav() {
-    document.getElementById("sideNavigation").style.width = "0";
-    document.getElementById("main").style.marginLeft = "0";
+  
+  // Get the element with id="defaultOpen" and click on it
+  document.getElementById("defaultOpen").click();
+
+  // modal
+  // When the user clicks the button, open the modal 
+  function openModal() {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
   }
-  // merubah ukuran menu ketika di buka
-  $('.topnav a').click(function(){
-    $('#sideNavigation').style.width = "200px";
-    $("#main").style.marginLeft = "200px";
-  });
-  // merubah ukuran menu ketika di tutup
-  $('.closebtn').click(function(){
-    $('#sideNavigation').style.width = "0";
-    $("#main").style.marginLeft = "0";
-  });
+  
+  // When the user clicks on <span> (x), close the modal
+  function closeModal() {
+    var modal = document.getElementById("myModal");
+    document.getElementById("editModal").style.display = "none";
+    modal.style.display = "none";
+  }
+  
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+    var modal = document.getElementById("myModal");
+      modal.style.display = "none";
+    }
+  }
+
+  function category(dt){
+        var select = document.getElementById('notes'); 
+        select.innerHTML="";
+        document.getElementsByName('number')[0].value="0";
+        let expense = ['Foods & Drinks','Bills','Transportation','Shopping','Health & Fitness','Education'];
+        let income = ['Award','Bonus','Salary','Gift','Sale','Other Income'];
+        if(dt === "expense"){
+            document.getElementsByName('number')[0].min = '0';
+            expense.forEach(element => {
+                select.options[select.options.length] = new Option(element, element);
+            });
+        }else{
+            // document.getElementsByName('number')[0].max = '10000000';
+            document.getElementsByName('number')[0].min = '0';
+            income.forEach(elements => {
+                select.options[select.options.length] = new Option(elements, elements);
+            });
+        }
+        
+    }
+    
+    function makeid(length) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() *  charactersLength));
+        }
+        document.getElementsByName('id')[0].value= result;
+    }
 </script>
-<script src="../js/fontawesome.js"></script>
-</html>
