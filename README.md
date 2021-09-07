@@ -10,6 +10,11 @@ localhost:5000
 ```
 - Dalam 2 aplikasi tersebut terdapat 2 menu utama yaitu menu untuk ke halaman test logic dan menu untuk ke halaman test budget app.
 - jika belum memiliki node bisa install [NodeJs](https://nodejs.org/en/download).
+##### AKUN APP
+| username | Password |
+| ------ | ------ |
+| arifin | arifin123 | 
+| zhein | zhein123| 
 
 #### B.	Keterangan File – File Inti
 ##### 1. Two Sums
