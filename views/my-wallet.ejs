@@ -1,0 +1,148 @@
+<h4>My Wallet</h4>
+<div class="row">
+    <div class="col-6 col-s-12 pl-1 mt-1">
+        <div class="card ">
+            <center>
+                <button class="expense " onclick="openPage('Home', this, 'red', 'income')" id="defaultOpen">Expense</button>
+                <button class="income mt-1" onclick="openPage('News', this, 'limegreen', 'expense')" >Income</button>
+            </center>
+            
+            <div id="Home" class="tabcontent">
+                <canvas id="chart-expense"class="canvas" ></canvas>
+                <div class="sub-total"><%=saldoExpense;%></div>
+            </div>
+            
+            <div id="News" class="tabcontent">
+                <canvas id="chart-income"></canvas>
+                <div class="sub-total"><%=saldoIncome;%></div>
+              </div>
+        </div>
+    </div>
+    <div class="col-6 col-s-12 pl-1 mt-1" >
+        <div class="card wallet ">
+           <h3> <img src="../img/icons.png"  alt=""> <%=nama%></h3><br>
+          <h3 class="saldo-bottom">Rp. <%= rupiah(saldo.wallet) %> <img src="../img/icons.png"  alt=""></h3>
+        </div>
+    </div>
+  </div>
+  <div class="row pb-2">
+    <div class="col-6 col-s-12 pl-1">
+      <div class="card mt-2">
+        <h3>History</h3>
+        <% history.forEach(val => { 
+        if (val.username === username) {
+
+        if(val.catatan === "Foods & Drinks"){
+            var icon = 'fas fa-burger-soda fa-fw';
+        } 
+        else if (val.catatan === "Bills") {
+            var icon = 'fas fa-file-invoice-dollar fa-fw';
+        } 
+        else if (val.catatan === "Transportation") {
+            var icon = 'fas fa-shopping-cart fa-fw';
+        } 
+        else if (val.catatan === "Shopping") {
+            var icon = 'fas fa-shopping-cart fa-fw';
+        } 
+        else if (val.catatan === "Health & Fitness") {
+            var icon = 'fas fa-heartbeat fa-fw';
+        } 
+        else if (val.catatan === "Education") {
+            var icon = 'fas fa-graduation-cap fa-fw';
+        }else if(val.catatan === "Award"){
+            var icon = 'fas fa-award fa-fw';
+        } 
+        else if (val.catatan === "Bonus") {
+            var icon = 'fas fa-donate fa-fw';
+        } 
+        else if (val.catatan === "Salary") {
+            var icon = 'fas fa-file-invoice fa-fw';
+        } 
+        else if (val.catatan === "Gift") {
+            var icon = 'fas fa-gift fa-fw';
+        } 
+        else if (val.catatan === "Sale") {
+            var icon = 'fas fa-money-bill-wave fa-fw';
+        } 
+        else if (val.catatan === "Other Income") {
+            var icon = 'fas fa-box fa-fw';
+        } %>
+        <div class="history">
+          
+          <table width="100%" >
+            <tr>
+              <td rowspan="2" width="70px">
+                <i class="<%=icon%> img"></i>
+              </td>
+              <td width="200px"><span><%=val.catatan%></span></td>
+              <td rowspan="2" align="right">
+                <b>Rp. <%=rupiah(val.number)%></b>
+              </td>
+            </tr>
+            <tr>
+              <td><small><%=val.ket%></small></td>
+            </tr>
+          </table>
+        </div>
+        <% 
+        }
+        }) %>
+      </div>
+    </div>
+    <div class="col-6 col-s-12">
+      
+    </div>
+  </div>
+
+<script>
+  var ctx1 = document.getElementById("chart-expense").getContext("2d");
+  const data = {
+    labels:<%- JSON.stringify(expenseCategory)%>,
+    datasets: [{
+      label: 'My First Dataset',
+      data: <%- JSON.stringify(expenseIdr)%>,
+      backgroundColor: [
+        'rgb(204, 51, 255)',
+        'rgb(252, 172, 25)',
+        'rgb(255, 205, 86)',
+        'rgb(52, 180, 235)',
+        'rgb(52, 235, 95)',
+        'rgb(162, 52, 235)'
+      ],
+      hoverOffset: 4
+    }],
+    options: {
+            responsive: true,
+            maintainAspectRatio: false,
+        }
+  };
+  const config = {
+    type: 'doughnut',
+    data: data,
+  };
+  const data1 = new Chart(ctx1,config);
+
+  var ctx2 = document.getElementById("chart-income").getContext("2d");
+  const datas = {
+    labels:<%- JSON.stringify(incomeCategory)%>,
+    datasets: [{
+      label: 'My First Dataset',
+      data: <%- JSON.stringify(incomeIdr)%>,
+      backgroundColor: [
+        'rgb(17, 44, 74)',
+        'rgb(252, 172, 25)',
+        'rgb(255, 205, 86)',
+        'rgb(52, 180, 235)',
+        'rgb(52, 235, 95)',
+        'rgb(162, 52, 235)'
+      ],
+      hoverOffset: 4
+    }]
+  };
+  const config1 = {
+    type: 'doughnut',
+    data: datas,
+  };
+  const data2 = new Chart(ctx2,config1);
+
+</script>
