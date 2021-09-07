@@ -31,7 +31,11 @@
         <h3>History</h3>
         <% history.forEach(val => { 
         if (val.username === username) {
-
+        if (val.kategori === "expense") {
+            var color = "background-color: red";
+        }else{
+            var color = "background-color: limegreen";
+        }
         if(val.catatan === "Foods & Drinks"){
             var icon = 'fas fa-burger-soda fa-fw';
         } 
@@ -74,7 +78,7 @@
               <td rowspan="2" width="70px">
                 <i class="<%=icon%> img"></i>
               </td>
-              <td width="200px"><span><%=val.catatan%></span></td>
+              <td width="200px"><span style="<%=color%>"><%=val.catatan%></span></td>
               <td rowspan="2" align="right">
                 <b>Rp. <%=rupiah(val.number)%></b>
               </td>
