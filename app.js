@@ -223,12 +223,8 @@ app.get('/dashboard',(req, res) =>{
         active:"dashboard",
     });
     }else{
-        res.render('login', {
-            layout: 'layout/main-login',
-            title: "Login",
-            ket: req.flash('ket'),
-            msg: req.flash('msg'),
-        });
+        res.redirect('/login')
+
     }
 })
 
@@ -256,12 +252,7 @@ app.get('/activity',(req, res) =>{
         oreder: req.flash('oreder'),
     });
     }else{
-        res.render('login', {
-            layout: 'layout/main-login',
-            title: "Login",
-            ket: req.flash('ket'),
-            msg: req.flash('msg'),
-        });
+        res.redirect('/login')
     }
 });
 
@@ -363,12 +354,7 @@ app.get('/wallet',(req, res) =>{
         active:"wallet"
     });
     }else{
-        res.render('login', {
-            layout: 'layout/main-login',
-            title: "Login",
-            ket: req.flash('ket'),
-            msg: req.flash('msg'),
-        });
+        res.redirect('/login')
     }
 })
 
