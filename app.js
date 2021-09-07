@@ -277,8 +277,8 @@ app.post('/activity/update',(req, res) =>{
         res.redirect('/activity');
 })
 
-app.get('/wallet',(req, res) =>{
-    if(req.session.login ){
+app.get('/wallet/:nama',(req, res) =>{
+    if(req.session.login && req.params.nama === req.session.username){
     
     const saldo = cekSaldo(req.session.username);
     // mengambil data income & expense 
