@@ -1,0 +1,410 @@
+<div class="row">
+    <div class="col-12 col-s-12 ">
+        <h3>Activity</h3>
+        <div class="card" >
+            <div class="row">
+                <div class="col-12">
+                    <center>
+                        <button class="expense active-ex" id="btn-expense" onclick="list('expense')" >
+                            Expense
+                        </button>
+                        <button class="income" id="btn-income" onclick="list('income')">
+                            Income 
+                        </button>
+                    </center>
+                </div>
+            </div>
+        </div>
+        <!-- List Activity Expense -->
+        <div id="list-expense">
+        <% expense.forEach(val => { 
+            if (val.username === username) {
+            %>
+            <% if(val.catatan === "Foods & Drinks"){
+                var icon1 = 'fas fa-burger-soda fa-fw';
+            } 
+            else if (val.catatan === "Bills") {
+                var icon1 = 'fas fa-file-invoice-dollar fa-fw';
+            } 
+            else if (val.catatan === "Transportation") {
+                var icon1 = 'fas fa-shopping-cart fa-fw';
+            } 
+            else if (val.catatan === "Shopping") {
+                var icon1 = 'fas fa-shopping-cart fa-fw';
+            } 
+            else if (val.catatan === "Health & Fitness") {
+                var icon1 = 'fas fa-heartbeat fa-fw';
+            } 
+            else if (val.catatan === "Education") {
+                var icon1 = 'fas fa-graduation-cap fa-fw';
+            } 
+            %>
+             
+             <div class="mt-1 list-activity" >
+                <div class="row">
+                    <div class="col-1 col-s-1">
+                        <i class="<%=icon1%> img"></i>
+                    </div>
+                    <div class="col-6 col-s-7">
+                        <div class="row mb-2">
+                            <div class="col-4 col-s-4">
+                                <span><%=val.catatan%></span>
+                            </div>
+                        </div>
+                        <div class="row second-line">
+                            <div class="col-4 col-s-4">
+                                <% 
+                                var date = new Date(val.tanggal)
+                                var tgl = moment(date).format('D MMMM YYYY'); 
+                                %> 
+                                <label><i class="fas fa-calendar fa-fw"></i><%=tgl%></label>
+                            </div>
+                            <div class="col-8 col-s-8">
+                                <label><i class="fas fa-clipboard fa-fw"></i><%=val.ket%></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2 col-s-2 mt-1" >
+                        <b>Rp. <%=rupiah(val.number)%></b>
+                    </div>
+                    <div class="col-3 col-s-2 mt-1">
+                        <center>
+                            <!-- Edit Button -->
+                            <a href="javascript:void(0)" onclick="edit('<%=val.id%>')" ><button class="btn-edit"><i class="fas fa-edit"></i></button></a>
+
+                            <!-- Delete Button -->
+                            <a href="/income/delete/<%=val.id%>"><button class="btn-delete"><i class="fas fa-trash"></i></button></a>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        <% 
+        }
+        }) %>
+        </div>
+        <!-- End List Activity -->
+
+        <!-- List Activity Income -->
+        <div id="list-income">
+        <% income.forEach(val => { 
+            if (val.username === username) {
+            
+            if(val.catatan === "Award"){
+                var icon = 'fas fa-award fa-fw';
+            } 
+            else if (val.catatan === "Bonus") {
+                var icon = 'fas fa-donate fa-fw';
+            } 
+            else if (val.catatan === "Salary") {
+                var icon = 'fas fa-file-invoice fa-fw';
+            } 
+            else if (val.catatan === "Gift") {
+                var icon = 'fas fa-gift fa-fw';
+            } 
+            else if (val.catatan === "Sale") {
+                var icon = 'fas fa-money-bill-wave fa-fw';
+            } 
+            else if (val.catatan === "Other Income") {
+                var icon = 'fas fa-box fa-fw';
+            } 
+            %>
+             
+            <div class="mt-1 list-activity" >
+                <div class="row">
+                    <div class="col-1 col-s-2">
+                        <i class="<%=icon%> img"></i>
+                    </div>
+                    <div class="col-6 col-s-6">
+                        <div class="row mb-2">
+                            <div class="col-4 col-s-4">
+                                <span><%=val.catatan%></span>
+                            </div>
+                        </div>
+                        <div class="row second-line">
+                            <div class="col-4 col-s-4">
+                                <% 
+                                var date = new Date(val.tanggal)
+                                var tgl = moment(date).format('D MMMM YYYY'); 
+                                %> 
+                                <label><i class="fas fa-calendar fa-fw"></i><%=tgl%></label>
+                            </div>
+                            <div class="col-8 col-s-8">
+                                <label><i class="fas fa-clipboard fa-fw"></i><%=val.ket%></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2 col-s-2 mt-1" >
+                        <b>Rp. <%=rupiah(val.number)%></b>
+                    </div>
+                    <div class="col-3 col-s-3 mt-1">
+                        <center>
+                            <!-- Edit Button -->
+                            <a href="javascript:void(0)" onclick="edit('<%=val.id%>')" ><button class="btn-edit"><i class="fas fa-edit"></i></button></a>
+
+                            <!-- Delete Button -->
+                            <a href="/income/delete/<%=val.id%>"><button class="btn-delete"><i class="fas fa-trash"></i></button></a>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        <%     
+            }
+            }) %>
+        </div>
+        <!-- End List Activity -->
+
+        <button class="add-trasac" onclick="openModal()">
+            <i class="fas fa-plus fa-fw" ></i> Add activity
+        </button>
+    </div>
+</div>
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal" >
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <span class="title">Add Activity</span> 
+    </div>
+    <form action="/activity" class="form-trans" method="post">
+        <div class="row">
+            <div class="col-12 col-s-12">
+                <div class="row">
+                    <div class="col-25">
+                        <label>Full Name</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="hidden" name="id"  placeholder="" value="">
+                        <input type="text" name="nama_lengkap" placeholder="Full Name" value="<%=nama_lengkap%>" autofocus autocomplete="off" required>
+                        <input type="hidden" name="username" placeholder="Nama Lengkap" value="<%=username%>">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label>Category</label>
+                    </div>
+                    <div class="col-75">
+                        <select name="kategori" placeholder="Pilih Kategori" required onchange="category(this.value)">
+                            <option value="">Category</option>
+                            <option value="expense">Expense</option>
+                            <option value="income">Income</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label>Date</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="date" placeholder="date" name="tanggal" autocomplete="off" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label>Note</label>
+                    </div>
+                    <div class="col-75">
+                        <select name="catatan" required id="notes">
+                            <option value="">Note</option>
+                            <option value="Foods & Drinks">Foods & Drinks</option>
+                            <option value="Bills">Bills</option>
+                            <option value="Transportation">Transportation</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Health & Fitness">Health & Fitness</option>
+                            <option value="Education">Education</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label>Description</label>
+                    </div>
+                    <div class="col-75">
+                        <textarea name="ket" placeholder="Add description" required autocomplete="off" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label>Total</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="number" min="1000" required name="number" >
+                    </div>
+                </div>
+                <div class="row" style="float: right;">
+                    <button type="submit" class="btn-submit">Save</button>
+                    <button type="reset" class="btn-reset" onclick="closeModal()">Cancel</button>
+                </div>
+                
+            </div>
+        </div>
+    </form>
+  </div>
+  <!-- End Modal content-->
+</div>
+
+<div id="editModal" class="modal" >
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+          <span class="close" onclick="closeModal()">&times;</span>
+          <span class="title">Add Activity</span> 
+      </div>
+      <form action="/activity/update" class="form-trans" method="post">
+          <div class="row">
+              <div class="col-12 col-s-12">
+                  <div class="row">
+                      <div class="col-25">
+                          <label>Full Name</label>
+                      </div>
+                      <div class="col-75">
+                          <input type="hidden" name="id" id="id"  placeholder="" value="">
+                          <input type="text" name="nama_lengkap" placeholder="Full Name" value="arifin" autofocus autocomplete="off" required id="nama_lengkap">
+                          <input type="hidden" name="username" id="username" placeholder="Nama Lengkap" value="arifin">
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-25">
+                          <label>Category</label>
+                      </div>
+                      <div class="col-75">
+                          <select name="kategori" id="kategori" placeholder="Pilih Kategori" required onchange="category(this.value)">
+                              <option value="">Category</option>
+                              <option value="expense">Expense</option>
+                              <option value="income">Income</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-25">
+                          <label>Date</label>
+                      </div>
+                      <div class="col-75">
+                          <input type="date" placeholder="date" name="tanggal" id="tanggal" autocomplete="off" required>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-25">
+                          <label>Note</label>
+                      </div>
+                      <div class="col-75">
+                          <select name="catatan" required id="catatan">
+                              <option value="">Note</option>
+                              <option value="Foods & Drinks">Foods & Drinks</option>
+                              <option value="Bills">Bills</option>
+                              <option value="Transportation">Transportation</option>
+                              <option value="Shopping">Shopping</option>
+                              <option value="Health & Fitness">Health & Fitness</option>
+                              <option value="Education">Education</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-25">
+                          <label>Description</label>
+                      </div>
+                      <div class="col-75">
+                          <textarea name="ket" id="ket" placeholder="Add description" required autocomplete="off" rows="5"></textarea>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-25">
+                          <label>Total</label>
+                      </div>
+                      <div class="col-75">
+                          <input type="number" min="1000" required name="number" id="number">
+                          <input type="hidden" name="oldData" id="oldData" placeholder="Nama Lengkap" value="arifin">
+                        </div>
+                  </div>
+                  <div class="row" style="float: right;">
+                      <button type="submit" class="btn-submit">Save</button>
+                      <button type="reset" class="btn-reset" onclick="closeModal()">Cancel</button>
+                  </div>
+                  
+              </div>
+          </div>
+      </form>
+    </div>
+    <!-- End Modal content-->
+  </div>
+<!-- End Modal -->
+
+<% if(messege.length !== 0){ %>
+    <script>
+        setTimeout(function(){
+            swal({
+            icon: '<%=ket%>',
+            title: '<%=ket%>',
+            text: '<%=messege%>',
+            closeOnClickOutside: false,
+            buttons: false,
+            timer: 2000
+            });
+        });
+    </script>
+<% } %>
+<script>
+    function list(x){
+        if(x === "expense"){
+            // seting btn-expense
+            document.getElementById('btn-income').style.border ="1px solid black";
+            document.getElementById('btn-income').style.background ="none";
+            document.getElementById('btn-income').style.color ="black";
+            // seting btn-incor
+            document.getElementById('btn-expense').style.backgroundColor ="rgb(255, 0, 0)";
+            document.getElementById('btn-expense').style.color ="white";
+            document.getElementById('btn-expense').style.border ="1px solid rgba(0,0,0,0)";
+            // seting list
+            document.getElementById('list-expense').style.display ="block";
+            document.getElementById('list-income').style.display ="none";
+
+        } else {
+            // seting btn-expense
+            document.getElementById('btn-expense').style.border ="1px solid black";
+            document.getElementById('btn-expense').style.background ="none";
+            document.getElementById('btn-expense').style.color ="black";
+            // seting btn-incor
+            document.getElementById('btn-income').style.backgroundColor ="limegreen";
+            document.getElementById('btn-income').style.color ="white";
+            document.getElementById('btn-income').style.border ="1px solid rgba(0,0,0,0)";
+            document.getElementById('list-income').style.display ="block";
+            document.getElementById('list-expense').style.display ="none";
+        }
+    }
+
+    function edit(id){
+        const form = ['id','nama_lengkap','username','kategori','tanggal','catatan','ket','number'];
+        $.ajax({
+        type: 'GET',
+        url: '/income/'+id,
+
+        success: function(result) {
+            var i = 0;
+            document.getElementById("editModal").style.display = "block";
+            var select = document.getElementById('catatan'); 
+            let income = ['Award','Bonus','Salary','Gift','Sale','Other Income'];
+            select.innerHTML="";
+            for (var key in result) {
+                if (result.hasOwnProperty(key)) {
+                    if(result[key] === "income"){
+                        income.forEach(element => {
+                            select.options[select.options.length] = new Option(element, element);
+                        });
+                    }   
+                    if(form[i] === 'number'){
+                        document.getElementById('oldData').value=result[key];
+                    }
+                    document.getElementById(form[i]).value=result[key];
+                    i++;
+                }
+            }
+            
+        },error: function(xhr, status, error){
+            var err =  xhr.responseText;
+            alert(err);
+        }
+      });
+    }
+</script>
